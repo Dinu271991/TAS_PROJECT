@@ -1,0 +1,174 @@
+//ViewChoice Backup
+
+$cn=mysql_connect("localhost","root","")or die("Could not Connect My Sql");
+mysql_select_db("login",$cn)or die("Could connect to Database");
+$rs =mysql_query("SELECT * FROM mcq");
+
+
+
+
+
+$i=1;
+
+
+				
+echo "<form name=myfm method=post action=Retrieve.php>"; 
+echo "<table>";
+while($row=mysql_fetch_array($rs)) {
+	
+
+//$true_ans=$row["ans1"];
+$que_des=$row["qdesc"]; 
+$option1=$row["option1"];
+$option2=$row["option2"]; 
+$option3=$row["option3"]; 
+$option4=$row["option4"]; 
+$num=mysql_num_rows($rs)or die(mysql_error());
+
+//for($i=1;$i<=$num; $i++)
+
+
+
+echo "<tr> <td >$i.$que_des </td> </tr> ";
+echo "<tr><td class=style8><input type=radio name=ans$i value=1 checked='checked'>$option1 </td><td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+echo "<td class=style8> <input type=radio name=ans$i  value=2>$option2" ."</tr>";
+echo "<tr><td class=style8><input type=radio name=ans$i   value=3>$option3 </td><td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+echo "<td class=style8><input type=radio name=ans$i  value=4>$option4</td></tr>";
+echo "<tr><th colspan='6'><br/><hr width='100%'></th><tr>";
+
+//mysql_query("INSERT INTO `mst_question` (`act_answer') VALUES ('ans$i');");
+
+//if($true_ans==$option1)
+//mysql_query("INSERT INTO `mst_question`( `que_desc`, `ans1`, `ans2`, `ans3`, `ans4`, `true_ans`, `act_answer`) VALUES ('$que_des','$option1','$option2','$option3','$option4','$true_ans','$option1')");
+//else if($true_ans==option1
+
+
+$i++;
+
+
+}
+
+echo "<tr><td><input type=submit name=submit value='Save & Next' id='submit_button'/></td></tr>";
+
+echo "<br/>";
+echo "<div align='right'>No of Questions ".$num."</div>";
+
+echo "</form>";
+
+
+echo "\n\n";		 
+
+
+
+?>
+
+<?php
+
+
+?>
+
+
+
+
+
+
+$cn=mysql_connect("localhost","root","")or die("Could not Connect My Sql");
+mysql_select_db("login",$cn)or die("Could connect to Database");
+$rs =mysql_query("SELECT * FROM mcq");
+
+
+
+
+
+$i=1;
+
+
+				
+echo "<form name=myfm method=post action=Retrieve.php>"; 
+echo "<table>";
+while($row=mysql_fetch_array($rs)) {
+	
+
+//$true_ans=$row["ans1"];
+$que_des=$row["qdesc"]; 
+$option1=$row["option1"];
+$option2=$row["option2"]; 
+$option3=$row["option3"]; 
+$option4=$row["option4"]; 
+$num=mysql_num_rows($rs)or die(mysql_error());
+
+//for($i=1;$i<=$num; $i++)
+
+
+
+echo "<tr> <td >$i.$que_des </td> </tr> ";
+echo "<tr><td class=style8><input type=radio name=ans$i value=1 checked='checked'>$option1 </td><td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+echo "<td class=style8> <input type=radio name=ans$i  value=2>$option2" ."</tr>";
+echo "<tr><td class=style8><input type=radio name=ans$i   value=3>$option3 </td><td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+echo "<td class=style8><input type=radio name=ans$i  value=4>$option4</td></tr>";
+echo "<tr><th colspan='6'><br/><hr width='100%'></th><tr>";
+
+//mysql_query("INSERT INTO `mst_question` (`act_answer') VALUES ('ans$i');");
+
+//if($true_ans==$option1)
+//mysql_query("INSERT INTO `mst_question`( `que_desc`, `ans1`, `ans2`, `ans3`, `ans4`, `true_ans`, `act_answer`) VALUES ('$que_des','$option1','$option2','$option3','$option4','$true_ans','$option1')");
+//else if($true_ans==option1
+
+
+$i++;
+
+
+}
+
+echo "<tr><td><input type=submit name=submit value='Save & Next' id='submit_button'/></td></tr>";
+
+echo "<br/>";
+echo "<div align='right'>No of Questions ".$num."</div>";
+
+echo "</form>";
+
+
+echo "\n\n";		 
+
+
+
+?>
+
+<?php
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

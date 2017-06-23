@@ -1,0 +1,68 @@
+
+	
+	
+	
+	
+	
+	
+	
+	
+	while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			if ( $i == 0) 
+			{
+				echo "<div class='cont' id='question_splitter_$j'>";
+			}
+			echo "Inside While!!";
+			echo "<tr> <td padding=15px>$row[qid]</td></tr>";
+			echo "<tr><td class=style8><input type=radio name=$row[option1] value=1>$row[option1] </td><td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+			echo "<td class=style8> <input type=radio name=$row[option2] value=2>$row[option2]" ."</tr>";
+			echo "<tr><td class=style8><input type=radio name=$row[option3]   value=3>$row[option3] </td><td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+			echo "<td class=style8><input type=radio name=$row[option4]  value=4>$row[option4]</td></tr>";
+			echo "<tr><th colspan='6'><br/><hr width='100%'></th><tr>";
+			
+			
+			
+			
+			
+			if( $count<1)
+{
+	echo "<br><br><h2 class=head1> No Programming questions</h2>";
+	exit;
+}
+else
+{
+	echo "<h3 class=head1> Programming Session</h2><br/>";
+	echo "<div align=left>";
+/*	while($i<=$num)
+	{
+		echo "<table>";
+		$row= mysql_fetch_row($rs);
+		echo "<tr><h4>$row[0]. $row[1]</h4></tr>";
+		echo "<tr><textarea autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' name='prgm$i' rows='10' cols='50' name=prog$i></textarea><tr>";
+		echo "</table>";
+		$i++;
+	}
+	*/
+	
+$i=1;
+	while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+	{
+		?>
+		<?php
+		$program_id=$row["program_id"]; 
+		$prog_desc=$row["prog_desc"];
+		echo "<tr><h4>$program_id.$prog_desc</h4></tr>";
+	//echo "<input type='text' name='prog1'></input>";
+		echo "<tr><textarea autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' rows='10' cols='50' name=prog$i></textarea><tr>";
+	$i++;
+	}
+	
+	
+	
+	
+}
+
+
+
+echo "<tr><td><input type=submit name=submit value='Save' id='submit_button'/></td></tr>";

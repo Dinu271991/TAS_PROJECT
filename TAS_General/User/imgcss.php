@@ -1,0 +1,710 @@
+ <html>
+<head>
+<style>
+div.gallery {
+	display: block
+   image-align:center;
+    border: 2px solid black;
+    float: left;
+    width: 180px;
+overflow: hidden;
+}
+
+
+
+ img { 
+	 
+	 border:1px grey;
+    width: 140px;
+    height:100px;
+}
+
+div.desc {
+    padding: 5px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+<?php
+session_start();
+
+if(!isset($_SESSION['user_session']))
+{
+	header("Location: index.php");
+}
+
+include_once 'dbconfig.php';
+
+$stmt = $db_con->prepare("SELECT * FROM tbl_candidates WHERE user_id=:uid");
+$stmt->execute(array(":uid"=>$_SESSION['user_session']));
+$row=$stmt->fetch(PDO::FETCH_ASSOC);
+
+if(isset($_POST['btn-test']))
+{
+	$_SESSION['btn-test']=$_POST['btn-test'];
+	header("Location: Demo.php");
+	
+	//$_SESSION['timer']=echo "<span id='timer'></span>";
+	
+}
+
+if(isset($_SESSION['Done']))
+{
+	
+	header("Location: FinalSubmit.php");
+	
+	//$_SESSION['timer']=echo "<span id='timer'></span>";
+	
+}
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style>
+
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sections</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"> 
+<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen"> 
+<script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script> -->
+<link href="style.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link href="StyleSheet/GenericStyleSheet.css" rel="stylesheet" type="text/css">
+ <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" />
+ 
+  
+<style>
+nav{
+	
+	height:83px;
+}
+
+.modal-dialog,
+.modal-content,
+.modal-body {
+    /* 80% of window height */
+    height: 85%;
+}
+
+.options{border:solid 0px; margin:10px;}
+.selected{
+   box-shadow:3px 3px 3px 3px #333;
+}
+ 
+</style>
+
+<script>
+
+$('#modal').on('show', function () {
+       $(this).find('.modal-body').css({
+              width:'auto', //probably not needed
+              height:'auto', //probably not needed 
+              'max-height':'100%'
+       });
+});
+
+</script>
+
+
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
+
+<script>
+     var c = 400;
+        var t;
+		var result;
+       // timedCount();
+		
+
+        function timedCount() {
+
+        	var hours = parseInt( c / 3600 ) % 24;
+        	var minutes = parseInt( c / 60 ) % 60;
+        	var seconds = c % 60;
+			var x=0;
+			
+        	result = (hours < 10 ? "0" + hours : hours) + "h " + (minutes < 10 ? "0" + minutes : minutes) + "m " + (seconds  < 10 ? "0" + seconds : seconds) +"s";
+
+           
+        	$('#timer').html(result);
+			
+			x=(c/4);
+			var with2Decimals = x.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
+			$('#ariavalue').html(with2Decimals+'%');
+			//$('#ariavalue').html(result);
+			if(x>(c/2))
+			{
+			 $('.progress-bar').css('width', x+'%').attr('aria-valuenow', x);
+			 
+			 
+			 
+			}
+			else
+			{
+				 $('.progress-bar').attr('class','progress-bar progress-bar-danger');
+				  $('.progress-bar').css('width', x+'%').attr('aria-valuenow', x);
+			}
+			
+			if(minutes==6 && seconds==0){
+				alert("Please save you answers in all sections by clicking Final Submit!! Time Left: "+result);
+				$('#timer').css('color','red');
+				
+			}
+			
+			if(c == 0 ){
+            	setConfirmUnload(false);
+                $("#demo").submit();
+            }
+            c = c - 1;
+			
+            t = setTimeout(function(){ timedCount() }, 1000);	
+
+					  var value = hours+" : "+minutes + " : " + seconds;
+					    localStorage.setItem("time2", value);
+						document.getElementById('checkTimer').innerHTML = localStorage.time2;
+				
+        }
+	
+	</script>
+	
+
+	<script type="text/javascript">
+$(document).ready(function () {
+    //Disable cut copy paste
+    $('body').bind('cut copy paste', function (e) {
+        e.preventDefault();
+    });
+   
+    //Disable mouse right click
+    //$("body").on("contextmenu",function(e){
+      //  return false;
+    //});
+});
+</script>
+	
+
+	
+<script>
+
+
+function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+
+$(document).ready(function(){
+$(document).on("keydown", disableF5);
+});
+
+</script>
+
+
+
+</head>
+
+<body onbeforeunload="return myFunction()">
+
+
+  
+<form name="Demo" id="demo" method="POST" action="logout.php"> 
+</form>
+<nav class="navbar navbar-default navbar-fixed-top" style="background:#FFFAFA;">
+
+      <div class="container">
+        <div class="navbar-header">
+		<img src="suntechlogo.jpg" width="110" height="70" alt="">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="http://www.codingcage.com">Coding Cage</a> -->
+		    
+        </div>
+        <!--<div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="http://www.codingcage.com/2015/11/ajax-login-script-with-jquery-php-mysql.html">Back to Article</a></li>
+            <li><a href="http://www.codingcage.com/search/label/jQuery">jQuery</a></li>
+            <li><a href="http://www.codingcage.com/search/label/PHP">PHP</a></li>
+          </ul> -->
+		   <center><h2 id="talent">Talent Acquisition System</h2></center>
+          <ul class="nav navbar-nav navbar-right">
+            
+             <li class="dropdown" style="position:fixed;top:0px;right:100px;">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			   
+			  <span class="glyphicon glyphicon-user"></span>&nbsp;<b>Hi' <?php echo $row['user_name']; ?></b>&nbsp;<span class="caret"></span></a>
+			  <span class="text-center text_underline"><b> Time Left : <span id='timer'></span></b></span> 
+              <ul class="dropdown-menu">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
+                <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
+              </ul> 
+			  
+            </li> 
+			<!--<div align="center">
+			<h5 class="text-center text_underline"> Timer : <span id='timer'></span></h3> 
+			</div>-->
+          </ul>
+		 
+      </div>
+	
+    </nav> 
+	
+	
+   
+  
+<div class="body-container">
+
+
+<div class="container">
+<center>
+<div class="first" style="width:50%;">
+    <div class='alert alert-info'>
+		<button class='close' data-dismiss='alert'>&times;</button>
+			<strong>Hello '<?php echo $row['user_name']; ?></strong>  Welcome to Talent Acquisition System.
+			
+    </div>
+	</div>
+</center>
+</div>
+
+<br/><br/>
+
+<button id="Done" name="Done" class='btn btn-danger' style="position:fixed;top:13%;right:5%" onClick="myFunction();">Abort Test</button>
+
+<!--<div align="center">
+ <h3 class="text-center text_underline"> Timer : <span id='timer'></span></h3> 
+ </div>-->
+   
+ <!--<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width:50%;">
+     <span id="ariavalue"></span>
+    </div> -->
+<!-- <h3 class="text-center text_underline" style='postion:relative;margin-left:900px'> Timer : <span id='timer'></span> </h3> -->
+<div class="container">
+
+   <?php 
+        require_once 'dbconfig.php';
+		
+        $automation=array("ViewChoice.php","Program.php","Essay.php","HTML.php");
+        $stmt = $db_con->prepare("SELECT category_name FROM tbl_mcq_category where DeptId=2");
+        $stmt->execute();
+		
+		echo "<div align='center'>";
+		?>
+	
+		<div class="col-lg-2">
+		 
+			
+			<div id="sections">
+		
+	<ul class="nav nav-pills nav-stacked" style="postion:fixed;color:green;"> 
+  
+  	 <li><img src="images/mcq.png" id="mcq" class="options" alt="Multiple Choice" border="0" height="230px" width="200px" style="position:fixed;top:10%;"/><span id="mcq" style="position:fixed;top:37%;left:75px;font-size:1.5em;">Multiple Choice</span></img></li><br/>
+	 <!--<span style="position:fixed;top:37%;left:75px;font-size:1.5em;">Multiple Choice</span>-->
+     <li><img src="images/descriptive.png" class="options" id="descriptive"  alt="Descriptive" border="0" height="230px" width="200px" style="position:fixed;top:50%;"/><span id="descriptive" style="position:fixed;top:80%;left:75px;font-size:1.5em;">Descriptive</span></img></li><br/>
+	
+  
+
+		<?php
+		
+		require_once 'dbconfig.php';
+		
+        //$automation=array("ViewChoice.php","Program.php","Essay.php","HTML.php");
+        $stmt1 = $db_con->prepare("SELECT * FROM tbl_mcq_category where DeptId=2 and category_type='MCQ'");
+        $stmt1->execute();
+		$totalMCQCategoryCount=$stmt1->rowCount();
+		$row1=$stmt1->fetch(PDO::FETCH_ASSOC);
+		$deptPage=$row1['category_name'].".php";
+		$categName=$row1['category_name'];
+		if($totalMCQCategoryCount<2)
+		{ 
+						
+			//$categName=$row1["category_type"];
+			
+	
+		?>
+	   <div id="iframeSections" style="position:absolute;left:90%">
+				<iframe src="<?php echo "$deptPage";?>" class="aptitude" id="<?php echo "$categName";?>" scrolling="yes" frameborder="0" style="border:none;top:-100px;width:1000px;height:1000px; allowTransparency=true"></iframe>
+		
+		</div>
+		<?php }
+		?>
+
+
+
+
+
+<div id="img" style='position:absolute;top:30%;left:50%;'>
+<?php
+require_once 'dbconfig.php';
+$stmt1 = $db_con->prepare("SELECT * FROM tbl_mcq_category where DeptId=2 and category_type='Descriptive'");
+$stmt1->execute();
+$j=0;
+while($row1=$stmt1->fetch(PDO::FETCH_ASSOC))
+{
+	$strReplace=str_replace("_"," ",$row1['category_name']);
+	$deptPage1[$j]=$row1['category_name'].".php";
+	$tempCateg3=$row1['category_name'].".php";
+	$categName1[$j]=$row1['category_name'];
+	$tempCateg=$row1['category_name'];
+	$modalName=$row1['category_name']."0";
+	$imgCateg="images/".$categName1[$j].".png";
+	$modalTarget="#".$modalName;
+	echo "<div class=gallery>";
+	echo "<a id=buttonId href=#>";
+	echo "<img src=$imgCateg alt=Fjords width=300 height=200 hspace=20 data-toggle=modal data-target=$modalTarget id=$strReplace class='descr'>";
+	echo "</a>";
+	echo "<div class=desc><b>$strReplace</b></div>";
+	echo "</div>";
+	$j++;	
+				
+	//echo "<div class='modal fade' id=$modalName tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
+	 echo "<div class='modal fade' id=$modalName tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
+	 
+	?>
+	
+	 <div class="modal-dialog" role="document" style="position:absolute;top:15%;left:18%;width:80%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Descriptive Section</h4>
+        </div>
+       
+        <div class="modal-footer">
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+         </div>
+		 
+		  <div class="modal-body">
+		  
+		  <?php
+		  
+				echo " <iframe src=$tempCateg3 class=demo2 scrolling=yes frameborder=0 style=border:none;top:30%;width:100%;height:100%; allowTransparency=true></iframe>";
+			
+		 ?>
+		  
+		  		 
+        </div>
+      </div>
+    </div>
+  </div>
+				
+		<?php		
+			
+			}
+			echo "</div>";
+		?>
+	
+  
+  
+  
+	<!--<form method="post" action="FinalSubmit.php">
+	<button id="Done" name="Done" class='btn btn-danger' style="position:absolute;top:13%;right:2%">Abort Test</button>
+	</form>-->
+	
+</div>
+<script>
+function myFunction() {
+    var txt;
+    if (confirm("Do you wish to abort the Test?") == true) {
+        txt = "You pressed OK!";
+		alert(txt);
+		window.location.href="FinalSubmit.php";
+    } else {
+        txt = "You pressed Cancel!";
+		alert(txt);
+    }
+    document.getElementById("demo").innerHTML = txt;
+}
+</script>
+
+
+<script>
+
+/*
+$(document).ready(function(){
+	$("iframe").hide();
+	 $(".first").fadeIn(2000).fadeOut(2000);
+	
+    $("#Aptitude").click(function(){
+        $("#ViewProgram").hide();
+		$("#ViewEssay").hide();
+		 $("#ViewHtml").hide();
+		 
+		$("#ViewChoice").show();
+		
+    });
+	 $("#Programming").click(function(){
+		$("#ViewChoice").hide();
+		$("#ViewEssay").hide();
+		 $("#ViewHtml").hide();
+        $("#ViewProgram").show();
+    });
+	$("#Essay").click(function(){
+		$("#ViewChoice").hide();
+		$("#ViewHtml").hide();
+        $("#ViewProgram").hide();
+        $("#ViewEssay").show();
+    });
+	$("#Html").click(function(){
+		$("#ViewChoice").hide();
+		$("#ViewProgram").hide();
+        $("#ViewEssay").hide();
+        $("#ViewHtml").show();
+    });
+	
+	
+	
+}); */
+</script>
+
+
+<script>
+var flag=0;
+var selectedValue='Apti';
+$(document).ready(function()
+{
+	$('#imageDesc .img-thumbnail').hide();
+	 document.cookie = "myJavascriptVar =12345";
+	$('img').click(function(){
+   $('.selected').removeClass('selected'); // removes the previous selected class
+   $(this).addClass('selected'); // adds the class to the clicked image
+});
+	$("iframe").hide();
+	$(".first").fadeIn(2000).fadeOut(6000);
+	$('.descriptive').hide();
+	$('.sections').hide();
+	$('#imageDesc .img-thumbnail').hide();
+	 $('.img-circle').click(function() {
+		 flag=flag+1;
+		 if(flag==1)
+		 {
+			timedCount();
+		 }
+		//$('li.active').removeClass('active');
+		//$(this).addClass('active');
+		
+	});
+	
+	$('.modal-body').click(function() {
+		
+		$('.demo2').show();
+	})
+	
+	$('.modal-body4').click(function() {
+		
+		$('.demo4').show();
+	})
+
+	
+	$('#mcq').click(function() {
+		$('#imageDesc .img-thumbnail').hide();
+		$('.descriptive').hide();
+		$("iframe").hide();
+		
+		$('.aptitude').show();
+	});
+	$('#descriptive').click(function() {
+		$('.aptitude').hide();
+		$("iframe").hide();
+		$('#imageDesc .img-thumbnail').show();
+		$('.descriptive').show();
+	});
+	
+	 var arrayFromPHP = <?php echo json_encode($categName1); ?>;
+	 $.each(arrayFromPHP , function(index, value){
+        $("#" + value).click(function() {
+			//$("iframe").hide();	
+			$('.aptitude').hide();
+			selectedValue = value; 		
+			
+			// $("#myModal").attr("id",selectedValue+"0");
+			// $(".demo2").attr("src",selectedValue+".php");
+			 
+			 //$(".demo2").show();
+			//$("#"+selectedValue+"0").show(); 
+			//alert(selectedValue);
+			
+			});
+			
+			
+			
+		
+	 
+	 
+	/* $('.autoCateg').click(function() {
+		 flag=flag+1;
+		 if(flag==1)
+		 {
+			timedCount();
+		 }
+		$('li.active').removeClass('active');
+		$(this).addClass('active');
+		
+	});
+	 var arrayFromPHP = <?php echo json_encode($categName); ?>;
+	 var arrayFromPHP2 = <?php echo json_encode($deptPage); ?>;
+	 var arrval=arrayFromPHP[0]
+	 var apti='#'+arrval;
+	 var selectedValue='';
+	 
+	 
+	
+	
+	
+	
+	 
+	  $.each(arrayFromPHP , function(index, value){
+        $("#" + value).click(function() {
+			$("iframe").hide();	
+			selectedValue = value; 
+			$("#"+selectedValue+"0").show(); 
+			//alert(selectedValue);
+			
+			});*/
+    });
+	$('.options').click(function() {
+		 flag=flag+1;
+		 if(flag==1)
+		 {
+			timedCount();
+		 }
+		});
+	 });
+	
+    /*$("#Aptitude").click(function(){
+        $("#ViewProgram").hide();
+		$("#ViewEssay").hide();
+		 $("#ViewHtml").hide();
+		 
+		$("#ViewChoice").show();
+		
+    });
+	 $("#Programming").click(function(){
+		$("#ViewChoice").hide();
+		$("#ViewEssay").hide();
+		 $("#ViewHtml").hide();
+        $("#ViewProgram").show();
+    });
+	$("#Essay").click(function(){
+		$("#ViewChoice").hide();
+		$("#ViewHtml").hide();
+        $("#ViewProgram").hide();
+        $("#ViewEssay").show();
+    });
+	$("#Html").click(function(){
+		$("#ViewChoice").hide();
+		$("#ViewProgram").hide();
+        $("#ViewEssay").hide();
+        $("#ViewHtml").show();
+    });
+	*/
+
+</script>
+
+
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$('input').on('click', function(){
+  var valeur = 0;
+  $('input:checked').each(function(){
+       if ( $(this).attr('value') > valeur )
+       {
+           valeur =  $(this).attr('value');
+       }
+  });
+  $('.progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);    
+});
+
+</script>
+<script type="text/javascript">
+    // Prevent accidental navigation away
+    setConfirmUnload(true);
+    function setConfirmUnload(on)
+    {
+        window.onbeforeunload = on ? unloadMessage : null;
+    }
+    function unloadMessage()
+    {
+        return 'Your Answered Questions are resetted zero, Please select stay on page to continue your Quiz';
+    }
+
+    $(document).on('click', 'button:submit',function(){
+    	setConfirmUnload(false);
+    });
+</script>
+
+<script type="text/javascript">
+
+function finished()
+{
+	window.location.href="FinalSubmit.php";
+}
+
+
+</script>
+</body>
+<footer>
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+	<br/>
+     <span style="color:white;position:absolute;right:42%;"> © 2017, Sun Technologies <sup> ®</sup> All Rights Reserved</span>
+	 <span style="color:white;position:absolute;right:92%;">Recommended Resolution: 1600x900</span>
+    </div>
+	
+</footer>
+</html>
+
+
+ 
+
+  
+
+<!--
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\ds.jpg" alt="Forest" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc"><b>Data Structures </b></div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\essay.jpg" alt="Northern Lights" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">Essay</div>
+</div>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\gc.jpg" alt="Mountains" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">General Computing</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\mc.jpg" alt="Mountains" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">Mobile Computing</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\os.jpg" alt="Mountains" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">Operating Systems</div>
+</div>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<div class="gallery">
+  <a target="_blank" href="#" >
+    <img src="C:\Users\pavanap\Desktop\sections images\sql.jpg" alt="Mountains" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">SQL</div>
+</div>
+</div> -->
+</body>
+</html> 

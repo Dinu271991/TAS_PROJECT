@@ -1,0 +1,28 @@
+<html><h1> javca script timer </h1>
+
+<div style ="font-weight: bold" id ="demo"></div>
+<script>
+ var countDownTime = 7200;
+ function countDownTimer() {
+  var hours = parseInt( countDownTime / 3600 ) % 24;
+  var minutes = parseInt( countDownTime / 60 ) % 60;
+  var seconds = countDownTime % 60;
+  var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
+  document.getElementById("demo").innerHTML = result;
+     if(countDownTime == 0 ){ countDownTime = 60*60*60; }
+     countDownTime = countDownTime - 1;
+     setTimeout(function(){ countDownTimer() }, 1000);
+ }
+
+</script>
+   
+   
+   
+   
+   
+   
+   <body>
+
+<button onclick="countDownTimer()">Click me</button>
+
+</body>

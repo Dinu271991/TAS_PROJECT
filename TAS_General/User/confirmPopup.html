@@ -1,0 +1,17 @@
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var txt;
+    if (confirm("Press a button!") == true) {
+        txt = "You pressed OK!";
+		alert(txt);
+    } else {
+        txt = "You pressed Cancel!";
+		alert(txt);
+    }
+    document.getElementById("demo").innerHTML = txt;
+}
+</script>

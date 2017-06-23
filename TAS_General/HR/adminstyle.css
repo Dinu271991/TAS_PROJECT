@@ -1,0 +1,95 @@
+
+body {
+    font-family: Helvetica,Arial;
+     width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  background-image: url("reg1.jpg");
+  background-repeat:no-repeat;
+
+   background-size:cover;
+
+}
+
+h1{
+    font-size: 35px;
+}
+.bgBox {
+    background-color: #f9f9f9;
+    border: 2px solid #dedede;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin: 0 auto 50px;
+    max-width: 430px;
+    padding: 50px;
+	
+
+   
+}
+.bgBox h2 {
+    color: #484848;
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 41px;
+    margin-top: 0;
+    text-align: center;
+}
+.bgBox input {
+    border: 1px solid #dedede;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: #484848;
+    font-size: 15px;
+    font-weight: normal;
+    height: 47px;
+    line-height: 16px;
+    outline: medium none;
+    padding: 0 15px;
+    transition: none 0s ease 0s ;
+    width: 100%;
+}
+.bgBox input[type="submit"] {
+    font-size: 21px;
+    height: 50px;
+}
+.bgBox input.valid_error {
+    border-color: #e8322e;
+}
+.bgBox .inputRow {
+    margin-bottom: 8px;
+    overflow: auto;
+    padding: 6px 0;
+}
+.bgBox .inputRow.submit {
+    margin-top: 10px;
+}
+
+.bgBox .inputRow .signIn {
+    background: #5795d2 none repeat scroll 0 0;
+    border-color: #5795d2;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+.bgBox .inputRow .signIn:hover {
+    background: #3c78b3 none repeat scroll 0 0;
+}
+.bgBox .inputRow .signIn.loading {
+    background: #5795d2 url("preloader.gif") no-repeat scroll center center;
+    text-indent: -10000px;
+}
+.loginForm {
+    margin-top: -215px;
+    position: relative;
+    top: 50%;
+}
+
+
+ #content {
+    position: absolute;
+	top:0px;
+   left:0px;
+}
+.error {color: #FF0000;}

@@ -1,0 +1,414 @@
+$cn=mysql_connect("localhost","root","")or die("Could not Connect My Sql");
+mysql_select_db("login",$cn)or die("Could connect to Database");
+$rs =mysql_query("SELECT * FROM mcq");
+$num=mysql_num_rows($rs)or die(mysql_error());
+
+
+
+
+$i=1;
+$id=$row['user_id'];
+$count=0;
+while($i<=$num)
+{
+	$row= mysql_fetch_row($rs);
+if(isset($_POST['ans'.$i]))
+{
+	  
+		$selected=$_POST['ans'.$i];
+		//echo($i.". Selected value is: ".$selected."<br/>");
+	
+		
+		$query="Select * from tbl_useranswer where userid='$id' and qid='$row[0]' ";
+		if($chkres=mysql_query($query))
+		{
+			if(mysql_num_rows($chkres) >0)
+			{
+		
+				mysql_query("UPDATE tbl_useranswer SET userid='$id', option1='$row[2]', option2='$row[3]',option3= '$row[4]',option4='$row[5]',trueans='$row[6]',yourans='$selected'  WHERE qid='$row[0]' and userid='$id';");
+			}
+		
+			else
+			{
+			mysql_query("insert into tbl_useranswer(userid,qid,option1,option2,option3,option4,trueans,yourans) values ('$id','$row[0]','$row[2]','$row[3]','$row[4]','$row[5]', '$row[6]','$selected')") or die(mysql_error());
+			
+			}
+		}
+		if($selected==$row[6])
+		{
+					//echo "Valid Answer";
+					$count=$count+1;
+					//echo "count=".$count;
+					
+		}
+		else
+		{
+					//echo "Invalid Answer";
+		}
+		
+		$query2="Select * from tbl_result where userid='$id'";
+		$date = date('Y-m-d H:i:s');
+		if($chkres=mysql_query($query))
+		{
+			if(mysql_num_rows($chkres) >0)
+			{
+				  //echo "Update count=".$count;
+					mysql_query("UPDATE tbl_result SET  test_date='$date', score='$count' WHERE user_id='$id';");
+					
+			}
+		}
+		else
+		{
+				 // echo "Insert count=".$count;
+					mysql_query("insert into tbl_result(user_id,test_date,score) values('$id','$date','$count')") or die(mysql_error());
+				
+		}
+			
+$n=1;
+	$i++;
+/*echo "<table>";
+echo "<tR><td><span class=style2>Que ".  $n .": $row[1] </style>";
+echo "<tr><td class=style8><input type=radio name=ans value=1>$row[2]";
+echo "<tr><td class=style8> <input type=radio name=ans value=2>$row[3]";
+echo "<tr><td class=style8><input type=radio name=ans value=3>$row[4]";
+echo "<tr><td class=style8><input type=radio name=ans value=4>$row[5]";
+echo "</table>";
+$n++;*/
+
+}
+}
+
+
+
+		
+
+
+?>
+
+
+Thank you for attempting Aptitude Questions.
+<a href="Demo.php">Back to Select section</a>
+
+</body>
+
+
+</html>
+
+
+
+
+//Program Backup
+
+$cn=mysql_connect("localhost","root","")or die("Could not Connect My Sql");
+mysql_select_db("login",$cn)or die("Could connect to Database");
+
+
+$rs =mysql_query("SELECT * FROM tbl_programs");
+$i=1;
+$num=mysql_num_rows($rs)or die(mysql_error());
+
+if($num<1)
+{
+	echo "<br><br><h2 class=head1> No Programming questions</h2>";
+	exit;
+}
+else
+{
+	echo "<h3 class=head1> Programming Session</h2><br/>";
+	echo "<div align=left>";
+/*	while($i<=$num)
+	{
+		echo "<table>";
+		$row= mysql_fetch_row($rs);
+		echo "<tr><h4>$row[0]. $row[1]</h4></tr>";
+		echo "<tr><textarea autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' name='prgm$i' rows='10' cols='50' name=prog$i></textarea><tr>";
+		echo "</table>";
+		$i++;
+	}
+	*/
+	
+$i=1;
+	while($i<=$num)
+	{
+		$row= mysql_fetch_row($rs);
+		echo "<tr><h4>$row[0]. $row[1]</h4></tr>";
+	//echo "<input type='text' name='prog1'></input>";
+		echo "<tr><textarea autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' rows='10' cols='50' name=prog$i></textarea><tr>";
+	$i++;
+	}
+	
+	
+	
+	
+}
+
+
+
+echo "<tr><td><input type=submit name=submit value='Save' id='submit_button'/></td></tr>";
+
+?>
+
+		
+	</form>
+
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
+
+
+//Essay Backup
+$cn=mysql_connect("localhost","root","")or die("Could not Connect My Sql");
+mysql_select_db("login",$cn)or die("Could connect to Database");
+
+
+$rs =mysql_query("SELECT * FROM tbl_essays");
+$i=1;
+$num=mysql_num_rows($rs)or die(mysql_error());
+
+if($num<1)
+{
+	echo "<br><br><h2 class=head1> No Essay questions</h2>";
+	exit;
+}
+else
+{
+	echo "<h3 class=head1> Essay Session</h2><br/>";
+	echo "<div align=left>";
+	while($i<=$num)
+	{
+		echo "<table>";
+		$row= mysql_fetch_row($rs);
+		echo "<tr><h4>$row[0]. $row[1]</h4></tr>";
+		echo "<tr><textarea autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' name='essay$i' rows='8' cols='50'></textarea><tr>";
+		echo "</table>";
+		$i++;
+	}
+	
+	
+	echo "<tr><td><input type=submit name=submit value='Save' id='submit_button'/></td></tr>";
+	
+	
+	
+	
+	
+}
+
+
+
+
+
+?>
+
+		
+	</form>
+
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
+
+
+//RetrieveTech Backup
+
+
+<?php
+
+$cn=mysql_connect("localhost","root","")or die("Could not Connect My Sql");
+mysql_select_db("login",$cn)or die("Could connect to Database");
+$rs =mysql_query("SELECT * FROM tbl_programs");
+$num=mysql_num_rows($rs)or die(mysql_error());
+
+
+
+
+$i=1;
+$id=$row['user_id'];
+$count=0;
+//$row= mysql_fetch_row($rs);
+
+if(isset($_POST['prog'.$i]))
+{
+	  while($i<=$num)
+	  {
+		  $row= mysql_fetch_row($rs);
+			$selected=$_POST['prog'.$i];
+			//echo($i.". Selected value is: ".$selected."<br/>");
+			echo "Text is: ".$selected;
+		
+			$query="Select * from tbl_userprogram where uid='$id' and program_id='$row[0]' ";
+			if($chkres=mysql_query($query))
+			{
+				 if(mysql_num_rows($chkres) >0)
+				{
+					mysql_query("UPDATE tbl_userprogram SET uid='$id', program_id='$row[0]', prog_desc='$selected'  WHERE program_id='$row[0]' and uid='$id';");
+				}
+			
+				else
+				{
+				mysql_query("insert into tbl_userprogram(uid,program_id,prog_desc) values ('$id','$row[0]','$selected')") or die(mysql_error());
+				
+				} 
+			}
+			$i++;
+	  }
+		$n=1;
+		
+}
+		
+
+
+?>
+
+
+//Retrieve Essay Backup
+
+$cn=mysql_connect("localhost","root","")or die("Could not Connect My Sql");
+mysql_select_db("login",$cn)or die("Could connect to Database");
+$rs =mysql_query("SELECT * FROM tbl_essays");
+$num=mysql_num_rows($rs)or die(mysql_error());
+
+
+
+
+$i=1;
+$id=$row['user_id'];
+$count=0;
+//$row= mysql_fetch_row($rs);
+
+if(isset($_POST['essay'.$i]))
+{
+	  while($i<=$num)
+	  {
+		  $row= mysql_fetch_row($rs);
+			$selected=$_POST['essay'.$i];
+			//echo($i.". Selected value is: ".$selected."<br/>");
+			echo "Text is: ".$selected;
+		
+			$query="Select * from tbl_useressays where uid='$id' and essay_id='$row[0]' ";
+			if($chkres=mysql_query($query))
+			{
+				 if(mysql_num_rows($chkres) >0)
+				{
+					mysql_query("UPDATE tbl_useressays SET uid='$id', essay_id='$row[0]', essay_desc='$selected'  WHERE program_id='$row[0]' and uid='$id';");
+				}
+			
+				else
+				{
+				mysql_query("insert into tbl_useressays(uid,essay_id,essay_desc) values ('$id','$row[0]','$selected')") or die(mysql_error());
+				
+				} 
+			}
+			$i++;
+	  }
+		$n=1;
+		
+}
+
+
+
+//Retireve HTML
+
+$cn=mysql_connect("localhost","root","")or die("Could not Connect My Sql");
+mysql_select_db("login",$cn)or die("Could connect to Database");
+$rs =mysql_query("SELECT * FROM tbl_html");
+$num=mysql_num_rows($rs)or die(mysql_error());
+
+
+
+
+$i=1;
+$id=$row['user_id'];
+$count=0;
+//$row= mysql_fetch_row($rs);
+
+if(isset($_POST['html'.$i]))
+{
+	  while($i<=$num)
+	  {
+		  $row= mysql_fetch_row($rs);
+			$selected=$_POST['html'.$i];
+			//echo($i.". Selected value is: ".$selected."<br/>");
+			echo "Text is: ".$selected;
+		
+			$query="Select * from tbl_userhtml where uid='$id' and html_id='$row[0]' ";
+			if($chkres=mysql_query($query))
+			{
+				 if(mysql_num_rows($chkres) >0)
+				{
+					mysql_query("UPDATE tbl_userhtml SET uid='$id', html_id='$row[0]', html_desc='$selected'  WHERE html_id='$row[0]' and uid='$id';");
+				}
+			
+				else
+				{
+				mysql_query("insert into tbl_userhtml(uid,html_id,html_desc) values ('$id','$row[0]','$selected')") or die(mysql_error());
+				
+				} 
+			}
+			$i++;
+	  }
+		$n=1;
+		
+}
+		
+
+
+?>
+
+
+Thank you for attempting Html Questions.
+<a href="Demo.php">Back to Select section</a>
+
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

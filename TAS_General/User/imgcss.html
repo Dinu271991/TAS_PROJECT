@@ -1,0 +1,98 @@
+ <html>
+<head>
+<style>
+div.gallery {
+	display: block
+   image-align:center;
+    border: 2px solid black;
+    float: left;
+    width: 180px;
+	position: relative;
+overflow: hidden;
+}
+
+
+
+ img {
+ 
+ 
+	 
+	 border:1px grey;
+    width: 140px;
+    height:100px;
+}
+
+div.desc {
+    padding: 5px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+<?php
+
+
+?>
+
+
+<div id="img">
+<div class="gallery">
+  <a  id="buttonId" target="_blank" href="#" onclick="return buttonClicked()">
+    <img id="buttonImage" src="C:\Users\pavanap\Desktop\sections images\inernet.PNG" alt="Fjords" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc"><b>Browser and Internet</b></div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\ds.jpg" alt="Forest" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc"><b>Data Structures </b></div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\essay.jpg" alt="Northern Lights" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">Essay</div>
+</div>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\gc.jpg" alt="Mountains" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">General Computing</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\mc.jpg" alt="Mountains" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">Mobile Computing</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="#">
+    <img src="C:\Users\pavanap\Desktop\sections images\os.jpg" alt="Mountains" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">Operating Systems</div>
+</div>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<div class="gallery">
+  <a target="_blank" href="#" >
+    <img src="C:\Users\pavanap\Desktop\sections images\sql.jpg" alt="Mountains" width="300" height="200" hspace="20">
+  </a>
+  <div class="desc">SQL</div>
+</div>
+</div>
+</body>
+</html> 
+
+<script>
+function buttonClicked()
+{
+    document.getElementById('buttonImage').src = 'C:\Users\pavanap\Desktop\sections images\inernet.PNG';
+    document.getElementById('buttonId').fadeOut = true;
+}
+</script>

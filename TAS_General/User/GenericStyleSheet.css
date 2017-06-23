@@ -1,0 +1,26 @@
+body { 
+ background-color:#ffe6cc;
+}
+ 
+img{
+	position:absolute;
+	left:40px;
+	top:10px;
+	
+}
+h2{
+	font-family: "playfair", Serif;
+	font-size:40px;
+	color:black;
+	text-align:center;
+}
+h3{
+	font-family: "Arial Black";
+	/*font-size:40px;
+	color:black;
+	text-align:center;*/
+}
+li{
+	font-family: "Arial Black";
+	
+}
